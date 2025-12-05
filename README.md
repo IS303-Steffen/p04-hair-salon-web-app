@@ -21,7 +21,6 @@
     - You can go to File > Save All in VS Code to do this.
     - Or, the shortcut on Mac is `cmd + opt + s`
     - Or, the shortcut on Windows is `ctrl + k` then release the keys, then press `s`
-- Part 1 should be done before the others, and it will be easier to do part 3 & 4 if part 2 is done first, but you could work on parts 2, 3, and 4 simultaneously if you want to split work up among group members.
 
 ## Libraries Required:
 - `streamlit`
