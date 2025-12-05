@@ -16,7 +16,7 @@
     - **Part 4: Write the GUI for the manager tools**
         - Use the `2_manager_tools.py` file
     - **Part 5: Host your app on the Streamlit Community Cloud**
-        - You'll need to create an account with [Streamlit](streamlit.io). You can forgo this step for a loss of 5 points.
+        - You'll need to create an account with [Streamlit](https://streamlit.io). You can forgo this step for a loss of 5 points.
 - Important: Because you'll have multiple .py files open, make sure you save all your open files before running any single file.
     - You can go to File > Save All in VS Code to do this.
     - Or, the shortcut on Mac is `cmd + opt + s`
