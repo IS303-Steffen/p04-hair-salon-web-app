@@ -4,7 +4,7 @@
 - This is a team project. Through GitHub Classroom you should have created a shared GitHub repository with your teammates. As long as you upload your finished code to that team repository, each team member will get credit. You will also need to fill out a peer review survey on Learning Suite to recieve credit (if you're in a team by yourself, you don't need to).
 - I do not provide automated tests for projects. You will need to determine yourself whether the code meets the requirements provided in the rubric. It is important for you to be able to determine whether a program you write meets requirements (in the real world there won't be pre-written tests to tell you if you did your job right).
 #### Overview
-- [Add a link here!]() for a video of me running through the logic of the program.
+- [Click here](https://www.youtube.com/watch?v=4VG8CLuQtRU) for a video of me running through what the project will look like.
 - The point of this project is to translate logic similar to your previous project to use a GUI web application using Streamlit, and then actually host your project on the internet so that anyone could use it. Most of the set up and a lot of the logic from your previous project is already present here in the `data_to_insert.py` file.
 - This project is split up into 4 parts in 4 different files:
     - **Part 1: Set up your database on Supabase**
@@ -42,7 +42,7 @@
 Supabase is an online service that hosts **PostgreSQL databases**, which are much more robust and capable than SQLite. We’re using Supabase in this project for three main reasons:
 
 1. **Streamlit Community Cloud doesn’t persist local files.**  
-   Streamlit runs your app in a temporary virtual machine (VM). When the VM shuts down (because nobody is using your app or when it redeploys), any local files (like an SQLite database) are deleted.  
+   If you host your Streamlit app on the internet through Streamlit Community Cloud, it runs your app in a temporary virtual machine (VM). When the VM shuts down (because nobody is using your app or when it redeploys), any local files (like an SQLite database) are deleted.  
    By using Supabase, your data is stored externally and **persists across sessions**, which is how real web applications work.
 2. **PostgreSQL is widely used in industry.**  
    Supabase gives you experience with a production-grade relational database. Even though your project uses fake salon data, the workflow mirrors how real companies build applications. Better to get some introductory experience to something you could use in real work.
@@ -56,7 +56,8 @@ Supabase is an online service that hosts **PostgreSQL databases**, which are muc
         - or if that doesn't work
     - `pip install psycopg2-binary`
         - or if you need to use pip3:
-    - `pip3 install psycopg2` or `pip3 install psycopg2`
+    - `pip3 install psycopg2` or `pip3 install psycopg2-binary`
+- It just needs to be installed, no need to import it anywhere.
 
 #### 2. Follow this tutorial to set up a Supabase account and postgresql database
 - [Click here](https://www.youtube.com/watch?v=LMkEakORw_M) and follow along.
@@ -64,7 +65,7 @@ Supabase is an online service that hosts **PostgreSQL databases**, which are muc
 #### 3. Set up your `secrets.toml` (shown in the tutorial video)
 - The tutorial video will go over this, but below you can copy and paste this into your `secrets.toml` file that you create inside the `.streamlit` folder (remember the . in the folder name)
 - Update the values for each line using the connection data from Supabase as shown in the video, as well as with the password you made. This isn't your Supabase account password, but the password you made when you made your project.
-- Note that this won't sync to GitHub, so if you are working in a team at separate times, if you set this up, give your teammates this info and make sure they know to make their own `secrets.toml` on their computer.
+- Note that this (purposefully) won't sync to GitHub, so if you are working in a team at separate times, if you set this up, give your teammates this info and make sure they know to make their own `secrets.toml` on their computer.
 
 ```
 SUPABASE_DB_HOST = ""
@@ -75,13 +76,12 @@ SUPABASE_DB_PASSWORD = ""
 ```
 
 #### 4. Open the `db_setup_and_helpers.py` file and run it (also shown in the tutorial video).
-- If you set up everything correctly, you should be able to see a bunch of data set up in Supabase in the Table Editor tab.
-- You already set up the peewee code and imported data in your last project, so no need to type all that out again. Just run the `db_setup_and_helpers.py` file and it is all taken care of if you set up everything in secrets.toml correctly. Rerun the file anytime you want to start from scratch.
+- You already set up the peewee code and imported data in your last project, so I already wrote that part for you to save you time. Just run the `db_setup_and_helpers.py` file and it will automatically create your database and fill it with data, assuming you set up everything in `secrets.toml` and Supabase correctly. Rerun the file anytime you want to start the data from scratch.
 
 ## Part 2: Set up your app to have 2 pages
 In `0_salon_app.py` you will write the setup for the 2 other pages of your web app. 
-- It looks basically like what you did in file 10a of the class practice if you want to reference the solution for that.
-1. Import streamlit and create a pages for `1_check_in.py` and `2_manager_tools.py` using `st.Page()`
+- It looks basically like what you did in file `10a` of the class practice if you want to reference the solution for that.
+1. Import streamlit and create pages for `1_check_in.py` and `2_manager_tools.py` using `st.Page()`
 2. Set up the navigation bar using `st.navigation()`. Give it the 2 pages you created, and set `position='top'`. Store the result in a variable
 3. Call `.run()` using the variable you created in step 2.
 From now on in the project, any time you want to run your app just use:
@@ -159,10 +159,10 @@ from db_setup_and_helpers import (
                 c_phone_number = st.session_state.get('customer_phone_number'),
                 c_gender = gender
             )
-        ```
+          ```
     - Store the customer object you created in `st.session_state`
     - Set the `current_view` in `session_state` to `select_options` (or a label that you make)
-    - call `st.rerun()` so that it will jump to the `select_options` view (described in step 3)
+    - call `st.rerun()` so that it will jump to the `select_options` view (described in step 4)
 
 #### 4. Create select options view
 ![select_options](./media/select_options_new.png)
@@ -261,167 +261,24 @@ import time
     - then run `st.rerun()` so that the page reruns and the deleted stylist isn't in the list anymore.
 
 ## Part 5: Host your app on the Streamlit Community Cloud
+You just need to follow along with a tutorial posted below. Before that though, here's some background on hosting apps:
+### What does it mean to "host" and "deploy" your app?
 
+- **Hosting an app** means running your program on a computer (a server) that is always available on the internet (so not just on your own laptop).
+- **Deploying an app** means uploading your code to that online server so other people can use it.
+- When you deploy to **Streamlit Community Cloud**, your Python code runs on a remote machine managed by Streamlit, not on your computer. They are nice and let people run small apps for free, but if you want more capability, you need to pay.
+- Because it’s hosted online, **your app gets a public URL**, and anyone with that link can open and interact with your program from anywhere.
+- Using **Supabase** for your database means your data also lives on the internet, so your app can access it whenever.
+
+![hosted_app_image](./media/system_design.png)
+
+### Deploy your app
+To deploy your app, head over to [streamlit.io](https://streamlit.io) and follow along with [this tutorial](https://www.youtube.com/watch?v=sxvuGQDXTPs)
+
+**IMPORTANT**: To get credit for hosting, you NEED to paste in the URL of your hosted web app in the `3_paste_your_url_here.txt` file.
 
 ## Grading Rubric
 Remember there are no automated tests for projects. `See RUBRIC.md`. Remember to right click and select "Open Preview" to view the file in a nice format. The TAs will update this file with your grade and any comments they have when they are done grading your submission.
 
 ## Example Output
-
-### Part 1: p03_1_db_classes.py
-Nothing necessary prints out here, but the file should create your database and all your models that you'll use in the 3 other files. If you run it with the `start_from_scratch()` function, it will print:
-```
-Recreated database structure from scratch
-```
-
-### Part 2: p03_2_data_import.py
-Nothing necessary prints out here, but this file should fill your database with data in all 3 tables. If you print out some of the data like the code I provided shows, it would look like this:
-```
-STARTING DATA:
-   c_first_name c_last_name c_phone_number c_gender s_first_name s_last_name s_gender s_hire_date a_haircut_type         a_date_time  a_payment  a_satisfied
-0      Kliment      Genney   123-456-7890        M       Cammie     Ashbolt        F  2020-04-27       Undercut 2024-11-21 19:10:00         22         True
-1       Elmira      Oldred   128-706-7297        F     Eldredge    O'Connor        M  2022-10-15       Undercut 2024-11-21 01:27:00         22         True
-2      Desmund      Wallis   703-915-5340        M       Cammie     Ashbolt        F  2020-04-27         Mullet 2024-11-15 18:19:00         18         True
-3     Courtney  Missington   716-616-3251        F      Miguela       Pizey        F  2022-03-16           Fade 2024-11-13 00:05:00         20         True
-4         Ferd  Theunissen   106-167-1013        M      Isadora        Puig        F  2022-11-24       Buzz Cut 2024-11-08 02:21:00         15        False 
-
-CUSTOMER DATA:
-   c_first_name c_last_name c_phone_number c_gender  c_id
-0      Kliment      Genney     1234567890        M     0
-1       Elmira      Oldred     1287067297        F     1
-2      Desmund      Wallis     7039155340        M     2
-3     Courtney  Missington     7166163251        F     3
-4         Ferd  Theunissen     1061671013        M     4 
-
-STYLIST DATA:
-   s_first_name s_last_name s_gender s_hire_date  s_id
-0       Cammie     Ashbolt        F  2020-04-27     0
-1     Eldredge    O'Connor        M  2022-10-15     1
-2      Miguela       Pizey        F  2022-03-16     2
-3      Isadora        Puig        F  2022-11-24     3
-4        Gregg     Sprowle        M  2023-06-09     4 
-
-APPOINTMENT DATA:
-   a_haircut_type         a_date_time  a_payment  a_satisfied  c_id  s_id  a_id
-0       Undercut 2024-11-21 19:10:00         22         True     0     0     0
-1       Undercut 2024-11-21 01:27:00         22         True     1     1     1
-2         Mullet 2024-11-15 18:19:00         18         True     2     0     2
-3           Fade 2024-11-13 00:05:00         20         True     3     2     3
-4       Buzz Cut 2024-11-08 02:21:00         15        False     4     3     4 
-
-Recreated database structure from scratch
-Exported cleaned and separated data to SQLite database
-```
-
-### Part 3: p03_3_check_in.py
-
-Here is a returning customer choosing to use the same hair cut and stylist as before:
-
-```
-Hello! Welcome to Incredible Cuts. Please enter your phone number to check in: 1234567890
-Welcome! You've had 3 appointments with us!
-At your last haircut on 2024-11-21 19:10:00 you got a Undercut haircut with Cammie as your stylist.
-Do you want to continue with these same options? Enter 'Y' if so, otherwise enter 'N': Y
-Cammie Ashbolt gave you a Undercut haircut today!
-Are you satisfied? Enter Y or N: Y
-
-Thank you for choosing Incredible Cuts! We hope to see you again soon.
-```
-
-Here is a returning customer choosing to enter in a new hair cut and stylist. Notice that Using dashes with the phone number works just fine:
-```
-Hello! Welcome to Incredible Cuts. Please enter your phone number to check in: 123-456-7890
-Welcome! You've had 4 appointments with us!
-At your last haircut on 2024-12-07 01:58:09.617900 you got a Undercut haircut with Cammie as your stylist.
-Do you want to continue with these same options? Enter 'Y' if so, otherwise enter 'N': N
-These are the available hairstyles: 
-1: Undercut
-2: Mullet
-3: Fade
-4: Buzz Cut
-5: Pixie Cut
-6: Bob
-7: Pompadour
-8: Layered Cut
-9: Crew Cut
-10: Shag
-Enter the number of the hairstyle you want: 4
-To get the first available stylist regardless of gender, enter 1. If you want your stylist to be the same gender as you, enter 2: 2
-Eldredge O'Connor gave you a Buzz Cut haircut today!
-Are you satisfied? Enter Y or N: N
-
-Thank you for choosing Incredible Cuts! We hope to see you again soon.
-```
-
-Here is a new customer with a phone number not recognized in the database:
-
-```
-Hello! Welcome to Incredible Cuts. Please enter your phone number to check in: 0987654321
-
-Thanks for joining us! Enter the following information:
-Enter your first name: Jimmy
-Enter your last name: John
-Enter your gender (M or F): M
-These are the available hairstyles: 
-1: Undercut
-2: Mullet
-3: Fade
-4: Buzz Cut
-5: Pixie Cut
-6: Bob
-7: Pompadour
-8: Layered Cut
-9: Crew Cut
-10: Shag
-Enter the number of the hairstyle you want: 9
-To get the first available stylist regardless of gender, enter 1. If you want your stylist to be the same gender as you, enter 2: 1
-
-Allix Kivelle gave you a Crew Cut haircut today!
-Are you satisfied? Enter Y or N: Y
-
-Thank you for choosing Incredible Cuts! We hope to see you again soon.
-```
-
-### Part 4: p03_4_manager_tools.py
-
-Here's an example of choosing all 3 options:
-
-```
-Welcome to Manager Tools. Choose an option below: 
-1. See the 5 most recent appointments that weren't satisfied
-2. Delete a stylist from the database
-3. Exit
-Enter an option: 1
-
-Appointment 1001 on 2024-12-07 01:59:05.786888: Kliment Genney got a Buzz Cut from Eldredge O'Connor. Kliment was not satisified.
-Appointment 4 on 2024-11-08 02:21:00: Ferd Theunissen got a Buzz Cut from Isadora Puig. Ferd was not satisified.
-Appointment 9 on 2024-10-31 19:26:00: Horacio Morpeth got a Fade from Zorana Slym. Horacio was not satisified.
-Appointment 12 on 2024-10-27 19:30:00: Etheline Latimer got a Pixie Cut from Paxon Katzmann. Etheline was not satisified.
-Appointment 13 on 2024-10-27 01:32:00: Beatriz Timmis got a Pompadour from Cammie Ashbolt. Beatriz was not satisified.
-
-Welcome to Manager Tools. Choose an option below: 
-1. See the 5 most recent appointments that weren't satisfied
-2. Delete a stylist from the database
-3. Exit
-Enter an option: 2
-0: Cammie Ashbolt
-1: Eldredge O'Connor
-2: Miguela Pizey
-3: Isadora Puig
-4: Gregg Sprowle
-5: Addison Hawler
-6: Paxon Katzmann
-7: Zorana Slym
-8: Karna Mac
-9: Allix Kivelle
-
-Enter the ID of a stylist to delete: 9
-Allix Kivelle was deleted from the database.
-
-Welcome to Manager Tools. Choose an option below: 
-1. See the 5 most recent appointments that weren't satisfied
-2. Delete a stylist from the database
-3. Exit
-Enter an option: 3
-Thank you for using the program.
-```
+Nothing prints in the terminal in this project, but you can watch the overview video again to see what your GUI should look like [here](https://www.youtube.com/watch?v=4VG8CLuQtRU).

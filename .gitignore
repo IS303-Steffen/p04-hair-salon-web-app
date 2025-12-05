@@ -1,6 +1,7 @@
 .DS_Store
 .streamlit/
 *solution*.py
+*.drawio
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
