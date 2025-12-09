@@ -251,7 +251,7 @@ import time
 #### Second Option: "Terminate a stylist"
 ![delete_stylist](./media/delete_stylist.png)
 - The second option in the selectbox widget should be `Terminate a stylist`
-- If it is selected, create a form that displays another form with the stylists all listed in a selectbox.
+- If it is selected, create a form that displays another selectbox with the stylists all listed in a selectbox.
     - use the provided function `get_all_stylists()` to get a list of stylist objects to use in the selectbox widget.
 - When the button is pressed:
     - write out `You have terminated <stylist first name> <stylist last name>`
