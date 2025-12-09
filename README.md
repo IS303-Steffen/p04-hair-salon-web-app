@@ -274,7 +274,9 @@ You just need to follow along with a tutorial posted below. Before that though, 
 ### Deploy your app
 To deploy your app, head over to [streamlit.io](https://streamlit.io) and follow along with [this tutorial](https://www.youtube.com/watch?v=sxvuGQDXTPs)
 
-**IMPORTANT**: To get credit for hosting, you NEED to paste in the URL of your hosted web app in the `3_paste_your_url_here.txt` file.
+**IMPORTANT**:
+- The video tutorial doesn't mention how to make your app public to everyone. [see here](https://docs.streamlit.io/deploy/streamlit-community-cloud/share-your-app) for instructions on making it publicly available.
+- To get credit for hosting, you NEED to paste in the URL of your hosted web app in the `3_paste_your_url_here.txt` file.
 
 ## Grading Rubric
 Remember there are no automated tests for projects. `See RUBRIC.md`. Remember to right click and select "Open Preview" to view the file in a nice format. The TAs will update this file with your grade and any comments they have when they are done grading your submission.
