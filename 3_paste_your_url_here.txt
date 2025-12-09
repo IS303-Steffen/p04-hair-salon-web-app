@@ -1,1 +1,3 @@
-Students: just paste in the url of your hosted app in here so you can get credit for hosting it:
+Students: just paste in the url of your hosted app in here so you can get credit for hosting it.
+Make sure to push your repository to GitHub after pasting it in here:
+
