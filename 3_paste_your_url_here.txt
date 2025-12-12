@@ -1,3 +1,5 @@
 Students: just paste in the url of your hosted app in here so you can get credit for hosting it.
-Make sure to push your repository to GitHub after pasting it in here:
+Double check that you made your app public (you can click the "Share" text in the top right corner of your streamlit app
+and make sure the "Pulic" switch is active)
+Make sure to push your repository to GitHub after pasting the url below:
 
