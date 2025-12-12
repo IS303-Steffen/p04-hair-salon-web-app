@@ -59,7 +59,7 @@ Supabase is an online service that hosts **PostgreSQL databases**, which are muc
 - It just needs to be installed, no need to import it anywhere.
 
 #### 2. Follow this tutorial to set up a Supabase account and postgresql database
-- [Click here](https://www.youtube.com/watch?v=LMkEakORw_M) and follow along.
+- Head over to [supabase.com](https://supabase.com/) and then follow along with [this tutorial here (click)](https://www.youtube.com/watch?v=SCwN5uAjAjY)
 
 #### 3. Set up your `secrets.toml` (shown in the tutorial video)
 - The tutorial video will go over this, but below you can copy and paste this into your `secrets.toml` file that you create inside the `.streamlit` folder (remember the . in the folder name)
@@ -131,6 +131,7 @@ from db_setup_and_helpers import (
     - Include a form submit button.
 - When the form submit button is pressed, take the inputted phone number, and pass it into the `clean_phone_number()` function that you are given.
     - If the phone number isn't valid, `clean_phone_number()` will return `None`. If it returns `None` display a message that says `That wasn't a 10 digit number, try again` and don't look up a customer.
+        - You can display that error message just using `st.write()` but you could also use `st.warning()` instead. It displays text in a warning color to make the message pop out to users. 
 - If the phone number is a valid 10 digit number, `clean_phone_number()` will return a 10 digit number. Pass that number into the provided `get_customer_if_exists()` function.
     - If `get_customer_if_exists()` can't find a matching customer with that phone number, it will return `None`. If it returns `None`:
         - Store the phone number in `session_state`
@@ -265,14 +266,16 @@ You just need to follow along with a tutorial posted below. Before that though, 
 
 - **Hosting an app** means running your program on a computer (a server) that is always available on the internet (so not just on your own laptop).
 - **Deploying an app** means uploading your code to that online server so other people can use it.
-- When you deploy to **Streamlit Community Cloud**, your Python code runs on a remote machine managed by Streamlit, not on your computer. They are nice and let people run small apps for free, but if you want more capability, you need to pay.
+- When you deploy to **Streamlit Community Cloud**, your Python code runs on a remote server managed by Streamlit, not on your computer. They are nice and let people run small apps for free, but if you want more capability, you need to pay.
 - Because it’s hosted online, **your app gets a public URL**, and anyone with that link can open and interact with your program from anywhere.
 - Using **Supabase** for your database means your data also lives on the internet, so your app can access it whenever.
 
 ![hosted_app_image](./media/system_design.png)
 
 ### Deploy your app
-To deploy your app, head over to [streamlit.io](https://streamlit.io) and follow along with [this tutorial](https://www.youtube.com/watch?v=sxvuGQDXTPs)
+To deploy your app, head over to [streamlit.io](https://streamlit.io) and follow along with [this tutorial](https://www.youtube.com/watch?v=-EK4hIF6-_g)
+- If you can get your app's check in page to appear, but it breaks anytime you try to check in with a phone number, you probably have an issue with you secrets file. [Watch this video](https://www.youtube.com/watch?v=kaXKcnR9PmI) to see if that fixes your problem.
+- If you run into any other issues, please reach out to your professor or TA. 
 
 **IMPORTANT**:
 - The video tutorial doesn't mention how to make your app public to everyone. [see here](https://docs.streamlit.io/deploy/streamlit-community-cloud/share-your-app) for instructions on making it publicly available.
