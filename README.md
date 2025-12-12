@@ -28,6 +28,7 @@
 - `pandas`
 - `psycopg2`
     - only if you use Supabase. You don't need to import it, but it is needed for `peewee` to work with Supabase and a postgres database. Installation instructions will be given in part 1.
+- If you are using a virtual environment, you can run `pip install -r requirements.txt` to install everything needed.
 
 ## Part 1: Set up your database on Supabase
 ### If you want to skip Part 1 at the cost of 5 points:
