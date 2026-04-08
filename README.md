@@ -1,7 +1,7 @@
 #### Project
 # Hair Salon Web App
 #### Team Projects Overview
-- This is a team project. Through GitHub Classroom you should have created a shared GitHub repository with your teammates. As long as you upload your finished code to that team repository, each team member will get credit. You will also need to fill out a peer review survey on Learning Suite to recieve credit (if you're in a team by yourself, you don't need to).
+- This is a team project. Through GitHub Classroom you should have created a shared GitHub repository with your teammates. As long as you upload your finished code to that team repository, each team member will get credit. You will also need to fill out [this peer review survey](https://forms.gle/wJoLugLVaFNYrCdE7) to recieve credit (if you're in a team by yourself, you don't need to).
 - I do not provide automated tests for projects. You will need to determine yourself whether the code meets the requirements provided in the rubric. It is important for you to be able to determine whether a program you write meets requirements (in the real world there won't be pre-written tests to tell you if you did your job right).
 #### Overview
 - [Click here](https://www.youtube.com/watch?v=4VG8CLuQtRU) for a video of me running through what the project will look like.
@@ -42,7 +42,7 @@
 Supabase is an online service that hosts **PostgreSQL databases**, which are much more robust and capable than SQLite. We’re using Supabase in this project for three main reasons:
 
 1. **Streamlit Community Cloud doesn’t persist local files.**  
-   If you host your Streamlit app on the internet through Streamlit Community Cloud, it runs your app in a temporary virtual machine (VM). When the VM shuts down (because nobody is using your app or when it redeploys), any local files (like an SQLite database) are deleted.  
+   If you host your Streamlit app on the internet through Streamlit Community Cloud, it runs your app in a temporary virtual machine (VM). When the VM shuts down (because nobody is using your app or when it redeploys), any local files (like an SQLite database) are deleted. That means you'd actually lose any changes to your data (like new customers, new appointments, etc.). 
    By using Supabase, your data is stored externally and **persists across sessions**, which is how real web applications work.
 2. **PostgreSQL is widely used in industry.**  
    Supabase gives you experience with a production-grade relational database. Even though your project uses fake salon data, the workflow mirrors how real companies build applications. Better to get some introductory experience to something you could use in real work.
@@ -52,20 +52,23 @@ Supabase is an online service that hosts **PostgreSQL databases**, which are muc
 ### Setting up your postgreSQL database with Supabase
 #### 1. Install `psycopg2` 
 - Before anything else, for `peewee` to work with postgresql databases, you need to have the `psycopg2` library installed. In your terminal, use one of the following:
-    - `pip install psycopg2`
-        - or if that doesn't work
-    - `pip install psycopg2-binary`
-        - or if you need to use pip3:
-    - `pip3 install psycopg2` or `pip3 install psycopg2-binary`
+    - Windows:
+        - `py -m pip install psycopg2-binary`, or:
+        - `python -m pip install psycopg2-binary`
+    - Mac
+        - `python -m pip install psycopg2-binary`, or:
+        - `python3 -m pip install psycopg2-binary`
+
 - It just needs to be installed, no need to import it anywhere.
 
 #### 2. Follow this tutorial to set up a Supabase account and postgresql database
-- Head over to [supabase.com](https://supabase.com/) and then follow along with [this tutorial here (click)](https://www.youtube.com/watch?v=SCwN5uAjAjY)
+- Head over to [supabase.com](https://supabase.com/) and then follow along with [this tutorial here (click)](https://www.youtube.com/watch?v=gq-_guCjlNs)
 
 #### 3. Set up your `secrets.toml` (shown in the tutorial video)
-- The tutorial video will go over this, but below you can copy and paste this into your `secrets.toml` file that you create inside the `.streamlit` folder (remember the . in the folder name)
+- The tutorial video will go over this, but below you can copy and paste this into your `secrets.toml` file that you create inside the `.streamlit` folder (remember the . in the folder name.
+- In the tutorial video, my `secrets.toml` file is colored because of an extension I have installed. It does not matter if your file is not colored.
 - Update the values for each line using the connection data from Supabase as shown in the video, as well as with the password you made. This isn't your Supabase account password, but the password you made when you made your project.
-- Note that this (purposefully) won't sync to GitHub, so if you are working in a team at separate times, if you set this up, give your teammates this info and make sure they know to make their own `secrets.toml` on their computer.
+- Note that `secrets.toml` (purposefully) won't sync to GitHub, so if you are working in a team at separate times, if you set this up, give your teammates this info and make sure they know to make their own `secrets.toml` on their computer.
 
 ```
 SUPABASE_DB_HOST = ""
@@ -76,7 +79,8 @@ SUPABASE_DB_PASSWORD = ""
 ```
 
 #### 4. Open the `db_setup_and_helpers.py` file and run it (also shown in the tutorial video).
-- You already set up the peewee code and imported data in your last project, so I already wrote that part for you to save you time. Just run the `db_setup_and_helpers.py` file and it will automatically create your database and fill it with data, assuming you set up everything in `secrets.toml` and Supabase correctly. Rerun the file anytime you want to start the data from scratch.
+- You already set up the peewee code and imported data in your last project, so I already wrote that part for you to save you time. Just run the `db_setup_and_helpers.py` file and it will automatically create your database and fill it with data, assuming you set up everything in `secrets.toml` and Supabase correctly.
+- You can rerun the file anytime you want to start the data from scratch.
 
 ## Part 2: Set up your app to have 2 pages
 In `0_salon_app.py` you will write the setup for the 2 other pages of your web app. 
@@ -137,11 +141,11 @@ from db_setup_and_helpers import (
     - If `get_customer_if_exists()` can't find a matching customer with that phone number, it will return `None`. If it returns `None`:
         - Store the phone number in `session_state`
         - Set the `current_view` in `session_state` to `new_customer` (or a label that you make)
-        - call `st.rerun()` so that it will jump to the `new_customer` view (described in step 2)
+        - call `st.rerun()` so that it will jump to the `new_customer` view (described in step 3)
     - If `get_customer_if_exists()` finds a matching customer, it will return a customer object:
         - Store the customer object in `session_state`
         - Set the `current_view` in `session_state` to `select_options` (or a label that you make)
-        - call `st.rerun()` so that it will jump to the `select_options` view (described in step 3)
+        - call `st.rerun()` so that it will jump to the `select_options` view (described in step 4)
 
 
 #### 3. Create new customer view
@@ -178,7 +182,7 @@ from db_setup_and_helpers import (
       ```
 - Get the most recent appointment associated with you customer object. The `.get_most_recent_appointment()` method is already written for you. If the customer object is a new customer, it will return `None`, otherwise it will return an appointment object.
     - `appt_obj = customer_object.get_most_recent_appointment()`
-- In a form, you'll need to display slighlty different things in this view depending on if they are a returning customer or new customer. You can tell them apart because returning customers will have an appointment object returned, but new customers will just have `None` returned.
+- In a form, you'll need to display slightly different things in this view depending on if they are a returning customer or new customer. You can tell them apart because returning customers will have an appointment object returned, but new customers will just have `None` returned.
     - *Returning customers (they have an appointment object):*
         - Display in semi-large text: `"### We've pre-selected the stylist and hairstyle you got last time, but feel free to choose any other if you'd like:"`
         - In selectboxes, display the same hairstylist and hairstyle that they got on their last appointment. You can find the indices of those like this:
@@ -275,7 +279,7 @@ You just need to follow along with a tutorial posted below. Before that though, 
 
 ### Deploy your app
 To deploy your app, head over to [streamlit.io](https://streamlit.io) and follow along with [this tutorial](https://www.youtube.com/watch?v=-EK4hIF6-_g)
-- If you can get your app's check in page to appear, but it breaks anytime you try to check in with a phone number, you probably have an issue with you secrets file. [Watch this video](https://www.youtube.com/watch?v=kaXKcnR9PmI) to see if that fixes your problem.
+- If you can get your app's check in page to appear, but it breaks anytime you try to check in with a phone number, you probably have an issue with your secrets file. [Watch this video](https://www.youtube.com/watch?v=kaXKcnR9PmI) to see if that fixes your problem.
 - If you run into any other issues, please reach out to your professor or TA. 
 
 **IMPORTANT**:
