@@ -70,7 +70,7 @@ Supabase is an online service that hosts **PostgreSQL databases**, which are muc
 - Update the values for each line using the connection data from Supabase as shown in the video, as well as with the password you made. This isn't your Supabase account password, but the password you made when you made your project.
 - Note that `secrets.toml` (purposefully) won't sync to GitHub, so if you are working in a team at separate times, if you set this up, give your teammates this info and make sure they know to make their own `secrets.toml` on their computer.
 
-```
+```toml
 SUPABASE_DB_HOST = ""
 SUPABASE_DB_PORT = "5432"
 SUPABASE_DB_NAME = ""
@@ -89,7 +89,10 @@ In `0_salon_app.py` you will write the setup for the 2 other pages of your web a
 2. Set up the navigation bar using `st.navigation()`. Give it the 2 pages you created, and set `position='top'`. Store the result in a variable
 3. Call `.run()` using the variable you created in step 2.
 From now on in the project, any time you want to run your app just use:
-- `streamlit run 0_salon_app.py` or `python -m streamlit 0_salon_app.py`
+    - `streamlit run 0_salon_app.py` or
+    - `py -m streamlit run 0_salon_app.py` or
+    - `python -m streamlit run 0_salon_app.py` or
+    - `python3 -m streamlit run 0_salon_app.py`
 
 
 ## Part 3: Write the GUI for the customer check-in process
@@ -107,7 +110,7 @@ From now on in the project, any time you want to run your app just use:
 **I highly recommend** you look at the solution for file `09_multiple_views_one_page` from the class practice. If you understand that file, this will be much easier.
 
 You are given several functions to save you time so you don't have to rewrite a lot of what you did in your previous project. I recommend just using these imports:
-```
+```python
 import streamlit as st
 from datetime import datetime
 from db_setup_and_helpers import (
@@ -157,7 +160,7 @@ from db_setup_and_helpers import (
     - Include a form submit button.
 - When the form submit button is pressed:
     - Take all the information you stored from the form and use it to create a new customer using peewee. Here's an exmaple. Note that I'm grabbing the phone number that they already entered in the `enter_phone_number` view (it is annoying to ask customers to enter the same info twice)
-        - ```
+        - ```python
             customer_obj = Customer.create(
                 c_first_name = first_name,
                 c_last_name = last_name,
@@ -176,7 +179,7 @@ from db_setup_and_helpers import (
 - At this point, you should have stored a customer object in `st.session_state`, whether it is a brand new customer or a returning customer. Grab it from `st.session_state`.
 - Using the customer object, call `customer_object.get_customer_message()` (already written for you) and display the ruturned string in a large font.
 - Get a list of stylist objects and a list of the hairstyles. The `get_all_stylists` function and `hairstyles_dict` are already given to you. We'll use these in the selectbox widgets soon.
-    - ```
+    - ```python
       list_of_stylists = get_all_stylists()
       list_of_haircuts = list(hairstyles_dict.keys())
       ```
@@ -186,14 +189,14 @@ from db_setup_and_helpers import (
     - *Returning customers (they have an appointment object):*
         - Display in semi-large text: `"### We've pre-selected the stylist and hairstyle you got last time, but feel free to choose any other if you'd like:"`
         - In selectboxes, display the same hairstylist and hairstyle that they got on their last appointment. You can find the indices of those like this:
-            - ```
+            - ```python
               stylist_index = get_index_of_most_recent_stylist(appt_obj)
               hairstyle_index = list_of_haircuts.index(appt_obj.a_haircut_type)
               ```
     - *New customers (they have no appointment object):*
         - Display in semi-large text: `"### Choose your preferred stylist and hairstyle:"`
         - In selectboxes, you'll allow them to choose a hairstylist and hairstyle that they got on their last appointment. You can just use `None` for their indices so the customer can just choose their first stylist and hairstyle manually.
-            - ```
+            - ```python
               stylist_index = None
               hairstyle_index = None
               ```
@@ -207,7 +210,7 @@ from db_setup_and_helpers import (
 
 #### 5. Create the getting haircut view
 - This is already made for you. I thought it would be fun to show you how you can have a progress bar. Feel free to look at the definition of the `pretend_to_get_a_haircut` function if you're curious how it works
-```
+```python
 elif st.session_state.get('current_view') == 'getting_haircut':
     pretend_to_get_a_haircut()
     st.session_state['current_view'] = 'check_out'
@@ -223,7 +226,7 @@ elif st.session_state.get('current_view') == 'getting_haircut':
 - Add a selectbox with the text `Were you satisfied with your haircut?` with the options being `Yes` or `No`.
     - If they choose `Yes` map that to a boolean `True`, `No` maps to boolean `False`
 - When they hit the submit button, create an appointment row in your database. You can reference this code, but make yours match whatever you actually called your variables:
-    - ```
+    - ```python
       Appointment.create(
           a_haircut_type=st.session_state.get('chosen_hairstyle'),
           a_date_time = datetime.today(),
@@ -241,7 +244,7 @@ elif st.session_state.get('current_view') == 'getting_haircut':
 ![manager_tools](./media/manager_tools.png)
 - The point of this module is to simulate a few of the capabilities and reports that a manager of the hair salon might want access to. Put your code in the `2_manager_tools.py` file.
 - Use these imports:
-```
+```python
 import streamlit as st
 from db_setup_and_helpers import get_manager_tools_df, get_all_stylists
 import time
